@@ -259,6 +259,51 @@ dynamite_df =
     titles = dynamite_review_titles,
     stars = dynamite_stars
   )</code></pre>
+<p><strong>ERROR: getting characters(0) with napoleon dynamite example</strong></p>
+</div>
+<div id="try-some-apis" class="section level2">
+<h2>Try some APIs</h2>
+<p>We’re just getting data, not HTML stuff.</p>
+<pre class="r"><code>water_df = 
+  GET(&quot;https://data.cityofnewyork.us/resource/ia2d-e54m.csv&quot;) %&gt;% 
+  content()</code></pre>
+<pre><code>## Rows: 42 Columns: 4</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (4): year, new_york_city_population, nyc_consumption_million_gallons_per...</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>Let’s see what JSON looks like, gives same thing.</p>
+<pre class="r"><code>water_df = 
+  GET(&quot;https://data.cityofnewyork.us/resource/ia2d-e54m.json&quot;) %&gt;% 
+  content(&quot;text&quot;) %&gt;% 
+  jsonlite::fromJSON() %&gt;% 
+  as_tibble()</code></pre>
+<p>BRFSS Data via API</p>
+<pre class="r"><code>brfss_smart2010 = 
+  GET(&quot;https://chronicdata.cdc.gov/resource/acme-vg9e.csv&quot;,
+      query = list(&quot;$limit&quot; = 5000)) %&gt;% 
+  content(&quot;parsed&quot;)</code></pre>
+<pre><code>## Rows: 5000 Columns: 23</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (16): locationabbr, locationdesc, class, topic, question, response, data...
+## dbl  (6): year, sample_size, data_value, confidence_limit_low, confidence_li...
+## lgl  (1): locationid</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>You add the <code>query</code> because there’s a limit of 1000 rows at a time. <code>parsed</code> and <code>text</code> give you a certain formatting for <code>content</code>.</p>
+<div id="pokemon-data" class="section level3">
+<h3>Pokemon data</h3>
+<pre class="r"><code>poke = 
+  GET(&quot;http://pokeapi.co/api/v2/pokemon/1&quot;) %&gt;%
+  content()
+
+poke$name</code></pre>
+<pre><code>## [1] &quot;bulbasaur&quot;</code></pre>
+</div>
 </div>
 
 
