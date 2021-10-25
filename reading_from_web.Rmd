@@ -1,8 +1,8 @@
 ---
-title: "reading_from_web"
+title: "Reading from Web"
 author: "Tara"
 date: "10/25/2021"
-output: html_document
+output: github_document
 ---
 
 ```{r}
